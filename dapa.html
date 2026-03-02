@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Fastest Joki Service - Layanan Joki & Top Up Terpercaya dengan Proses Secepat Kilat">
+    <title>Fastest Joki Service - Premium Gaming Service</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Nunito', 'sans-serif'],
+                        display: ['Fredoka One', 'cursive'],
+                    },
+                    colors: {
+                        hydro: {
+                            50: '#f0f9ff', 100: '#e0f2fe', 200: '#bae6fd', 300: '#7dd3fc',
+                            400: '#38bdf8', 500: '#0ea5e9', 600: '#0284c7', 700: '#0369a1', 800: '#075985', 900: '#0c4a6e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { 
+            overflow-x: hidden; 
+            background-color: #f0f7ff; 
+            scroll-behavior: smooth; 
+            cursor: none; /* Hide real cursor */
+        }
+
+        .mesh-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(at 0% 0%, rgba(14, 165, 233, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(56, 189, 248, 0.15) 0px, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(224, 242, 254, 0.3) 0px, transparent 50%);
+            filter: blur(40px);
+        }
+        
+        #custom-cursor {
+            position: fixed;
+            top: 0; left: 0;
+            width: 25px; height: 25px;
+            background: rgba(14, 165, 233, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 15px rgba(14, 165, 233, 0.6);
+            backdrop-filter: blur(1px);
+            will-change: transform;
+        }
+
+        .cursor-trail {
+            position: fixed;
+            top: 0; left: 0;
+            width: 18px; height: 18px;
+            background: rgba(14, 165, 233, 0.4);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            filter: blur(4px);
+            will-change: transform, opacity;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .furina-container {
+            position: relative;
+            height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        @media (min-width: 1024px) {
+            .furina-container { height: 550px; }
+        }
+
+        #furina-img {
+            filter: drop-shadow(0 20px 50px rgba(14, 165, 233, 0.4));
+            max-height: 100%;
+            object-fit: contain;
+            z-index: 10;
+            will-change: transform;
+        }
+
+        .shop-card {
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            will-change: transform, box-shadow;
+        }
+        .shop-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            background: white;
+            box-shadow: 0 20px 40px -10px rgba(14, 165, 233, 0.2);
+        }
+
+        .modal-wrapper { 
+            opacity: 0; visibility: hidden; 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .modal-wrapper.open { opacity: 1; visibility: visible; }
+
+        .bubble {
+            position: absolute;
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(255,255,255,0.3));
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: -1;
+            will-change: transform;
+        }
+    </style>
+</head>
+<body class="text-hydro-900 antialiased">
+
+    <div id="custom-cursor"></div>
+    <div class="mesh-bg"></div>
+    <div id="bubble-container" class="fixed inset-0 pointer-events-none z-0"></div>
+
+    <nav class="fixed w-full z-50 top-4 lg:top-6 px-4 lg:px-6">
+        <div class="max-w-5xl mx-auto glass rounded-2xl px-5 py-3 lg:py-4 flex justify-between items-center shadow-lg">
+            <div class="flex items-center gap-2 lg:gap-3">
+                <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/4580a602-9c5d-4976-9e26-df1708d4a8ec/defg753-0e86d4d7-278a-4cc3-b500-a65138608c3e.png/v1/fill/w_894,h_894/genshin_impact_hydro__redbubble__by_otakuthemeeperoni_defg753-pre.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NjIwMSIsInBhdGgiOiIvZi80NTgwYTYwMi05YzVkLTQ5NzYtOWUyNi1kZjE3MDhkNGE4ZWMvZGVmZzc1My0wZTg2ZDRkNy0yNzhhLTRjYzMtYjUwMC1hNjUxMzg2MDhjM2UucG5nIiwid2lkdGgiOiI8PTYyMDEifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uub3BlcmF0aW9ucyJdfQ.PhacqFA4zhbnB0FcIFXh0ArxKPneU6L4ySzZGBZAGSk" 
+                     alt="Hydro Logo" class="w-8 h-8 lg:w-10 lg:h-10 object-contain">
+                <span class="font-display text-lg lg:text-2xl tracking-tight text-hydro-800">FASTEST JOKI</span>
+            </div>
+            <div class="hidden sm:block">
+                <span class="text-hydro-400 text-[10px] lg:text-xs font-bold uppercase tracking-widest">Premium Service</span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="relative z-10 min-h-screen flex items-center max-w-7xl mx-auto px-6 pt-28 pb-12">
+        <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 w-full items-center">
+            
+            <div class="order-1 lg:order-1 furina-container">
+                <div class="absolute w-64 h-64 lg:w-[400px] lg:h-[400px] bg-hydro-300/20 blur-[80px] rounded-full"></div>
+                <img id="sticker-1" src="https://cdn3.emoji.gg/emojis/8408-furina.png" alt="Sticker" class="absolute top-0 left-0 w-16 h-16 lg:w-24 lg:h-24 z-20 opacity-80" loading="lazy">
+                <img id="sticker-2" src="https://cdn3.emoji.gg/emojis/8877-furina.png" alt="Sticker" class="absolute bottom-0 right-0 w-20 h-20 lg:w-28 lg:h-28 z-20 opacity-80" loading="lazy">
+                <img id="furina-img" src="https://static.tvtropes.org/pmwiki/pub/images/furina_ousia_transparent.png" alt="Furina">
+            </div>
+
+            <div class="order-2 lg:order-2 space-y-8 lg:space-y-10 text-center lg:text-left" id="shop-section">
+                <div class="gsap-hero-text opacity-0">
+                    <h1 class="font-display text-4xl md:text-6xl lg:text-7xl text-hydro-900 leading-tight">
+                        <span class="text-hydro-500">Fastest</span> Joki Service
+                    </h1>
+                    <p class="text-hydro-600 font-medium mt-4 lg:mt-6 text-base lg:text-lg max-w-md mx-auto lg:mx-0">
+                        Jasa joki profesional, aman, dan amanah. Selesaikan quest dan spiral abyss kamu tanpa ribet!
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3 lg:gap-5">
+                    <div class="shop-card glass rounded-3xl p-5 lg:p-7 gsap-card opacity-0 group text-left cursor-pointer" onclick="openModal('1600', '27.000')">
+                        <img src="https://www.rw-designer.com/icon-image/23060-256x256x32.png" alt="Primo" class="w-10 h-10 lg:w-14 lg:h-14 mb-3 group-hover:rotate-12 transition-transform" loading="lazy">
+                        <h3 class="font-display text-lg lg:text-2xl text-hydro-800">1600 <span class="text-[10px] font-sans font-bold text-hydro-400 block">PRIMOGEMS</span></h3>
+                        <p class="font-black text-base lg:text-xl text-hydro-600 mt-1">Rp 27k</p>
+                    </div>
+
+                    <div class="shop-card glass rounded-3xl p-5 lg:p-7 gsap-card opacity-0 group text-left cursor-pointer" onclick="openModal('3200', '50.000')">
+                        <img src="https://www.rw-designer.com/icon-image/23060-256x256x32.png" alt="Primo" class="w-10 h-10 lg:w-14 lg:h-14 mb-3 group-hover:rotate-12 transition-transform" loading="lazy">
+                        <h3 class="font-display text-lg lg:text-2xl text-hydro-800">3200 <span class="text-[10px] font-sans font-bold text-hydro-400 block">PRIMOGEMS</span></h3>
+                        <p class="font-black text-base lg:text-xl text-hydro-600 mt-1">Rp 50k</p>
+                    </div>
+
+                    <div class="shop-card glass rounded-3xl p-5 lg:p-7 gsap-card opacity-0 group text-left cursor-pointer" onclick="openModal('4800', '80.000')">
+                        <img src="https://www.rw-designer.com/icon-image/23060-256x256x32.png" alt="Primo" class="w-10 h-10 lg:w-14 lg:h-14 mb-3 group-hover:rotate-12 transition-transform" loading="lazy">
+                        <h3 class="font-display text-lg lg:text-2xl text-hydro-800">4800 <span class="text-[10px] font-sans font-bold text-hydro-400 block">PRIMOGEMS</span></h3>
+                        <p class="font-black text-base lg:text-xl text-hydro-600 mt-1">Rp 80k</p>
+                    </div>
+
+                    <div class="shop-card glass rounded-3xl p-5 lg:p-7 gsap-card opacity-0 group text-left cursor-pointer" onclick="openModal('6400', '110.000')">
+                        <img src="https://www.rw-designer.com/icon-image/23060-256x256x32.png" alt="Primo" class="w-10 h-10 lg:w-14 lg:h-14 mb-3 group-hover:rotate-12 transition-transform" loading="lazy">
+                        <h3 class="font-display text-lg lg:text-2xl text-hydro-800">6400 <span class="text-[10px] font-sans font-bold text-hydro-400 block">PRIMOGEMS</span></h3>
+                        <p class="font-black text-base lg:text-xl text-hydro-600 mt-1">Rp 110k</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="checkout-modal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 modal-wrapper">
+        <div class="absolute inset-0 bg-hydro-900/40 backdrop-blur-sm" onclick="closeModal()"></div>
+        <div class="relative w-full max-w-sm glass bg-white/90 rounded-[2.5rem] p-8 shadow-2xl">
+            <h3 class="font-display text-2xl text-hydro-900 mb-6 text-center">Konfirmasi Joki</h3>
+            <div class="space-y-4">
+                <input type="number" id="player-uid" placeholder="Masukkan UID" class="w-full bg-white/50 border-2 border-hydro-100 rounded-2xl px-5 py-3 focus:border-hydro-400 focus:outline-none font-bold text-center">
+                <select id="player-server" class="w-full bg-white/50 border-2 border-hydro-100 rounded-2xl px-5 py-3 focus:border-hydro-400 focus:outline-none font-bold text-hydro-700">
+                    <option value="Asia">Server Asia</option>
+                    <option value="America">Server America</option>
+                    <option value="Europe">Server Europe</option>
+                    <option value="TW/HK/MO">Server TW/HK/MO</option>
+                </select>
+                <div class="p-4 bg-hydro-600 rounded-2xl text-white text-center">
+                    <p id="modal-primo" class="text-[10px] uppercase font-bold opacity-80">--</p>
+                    <p id="modal-price" class="text-xl font-display">Rp 0</p>
+                </div>
+                <button onclick="processPayment()" id="pay-button" class="w-full bg-hydro-500 hover:bg-hydro-700 text-white py-4 rounded-xl font-black shadow-lg transition-all active:scale-95">
+                    ORDER VIA WHATSAPP →
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedPrimo = "";
+        let selectedPrice = "";
+
+        // Animations Initializers
+        function initStickers() {
+            gsap.to("#sticker-1", {
+                y: "25px", x: "10px", rotation: 15, scale: 1.1,
+                duration: 4, repeat: -1, yoyo: true, ease: "sine.inOut"
+            });
+            gsap.to("#sticker-2", {
+                y: "-30px", x: "-15px", rotation: -12, scale: 0.9,
+                duration: 5, repeat: -1, yoyo: true, ease: "sine.inOut"
+            });
+            gsap.to("#furina-img", {
+                y: 15, scale: 1.02,
+                duration: 3, repeat: -1, yoyo: true, ease: "power1.inOut"
+            });
+        }
+
+        const cursor = document.getElementById('custom-cursor');
+        
+        document.addEventListener('mousemove', (e) => {
+            gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1, overwrite: true });
+            createTrail(e.clientX, e.clientY);
+        });
+
+        function createTrail(x, y) {
+            const trail = document.createElement('div');
+            trail.className = 'cursor-trail';
+            trail.style.left = x + 'px';
+            trail.style.top = y + 'px';
+            document.body.appendChild(trail);
+
+            gsap.to(trail, {
+                scale: 0.1, opacity: 0, duration: 0.4,
+                onComplete: () => trail.remove()
+            });
+        }
+
+        window.addEventListener('load', () => {
+            const tl = gsap.timeline();
+            tl.to(".gsap-hero-text", { opacity: 1, y: -10, duration: 0.8 })
+              .to(".gsap-card", { opacity: 1, y: -10, stagger: 0.1, duration: 0.5 }, "-=0.4");
+
+            initStickers();
+            createBubbles();
+        });
+
+        function createBubbles() {
+            const container = document.getElementById('bubble-container');
+            const fragment = document.createDocumentFragment();
+            for(let i = 0; i < 15; i++) {
+                const bubble = document.createElement('div');
+                bubble.className = 'bubble';
+                const size = Math.random() * 50 + 20 + 'px';
+                bubble.style.width = size; bubble.style.height = size;
+                bubble.style.left = Math.random() * 100 + 'vw';
+                bubble.style.top = Math.random() * 100 + 'vh';
+                fragment.appendChild(bubble);
+                
+                gsap.to(bubble, {
+                    y: "random(-100, 100)", x: "random(-50, 50)",
+                    duration: "random(5, 10)", repeat: -1, yoyo: true, ease: "sine.inOut"
+                });
+            }
+            container.appendChild(fragment);
+        }
+
+        function openModal(primo, price) {
+            selectedPrimo = primo; selectedPrice = price;
+            document.getElementById('modal-primo').innerText = primo + ' Primogems';
+            document.getElementById('modal-price').innerText = 'Rp ' + price;
+            document.getElementById('checkout-modal').classList.add('open');
+        }
+
+        // RESET LOGIC (PERFECTIONED)
+        function closeModal() { 
+            const modal = document.getElementById('checkout-modal');
+            modal.classList.remove('open');
+            
+            // Memberikan sedikit delay agar transisi tutup selesai sebelum data hilang (opsional visual)
+            setTimeout(() => {
+                selectedPrimo = "";
+                selectedPrice = "";
+                document.getElementById('player-uid').value = ""; // Reset UID
+                document.getElementById('modal-primo').innerText = "--";
+                document.getElementById('modal-price').innerText = "Rp 0";
+                document.getElementById('player-server').selectedIndex = 0; // Reset Server ke Asia
+            }, 300);
+        }
+
+        function processPayment() {
+            const uid = document.getElementById('player-uid').value;
+            const server = document.getElementById('player-server').value;
+            if(uid.length < 5) { alert('Masukkan UID yang valid!'); return; }
+            
+            const btn = document.getElementById('pay-button');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = "MENGHUBUNGKAN...";
+            btn.disabled = true;
+
+            setTimeout(() => {
+                const message = `Halo Fastest Joki!%0A%0AUID: ${uid}%0A- Server: ${server}%0A- Paket: ${selectedPrimo} Primogems%0A- Total: Rp ${selectedPrice}%0A%0AMohon diproses kak!`;
+                window.location.href = `https://wa.me/6283152293048?text=${message}`;
+                
+                // Kembalikan tombol setelah beberapa saat
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                }, 1000);
+            }, 800);
+        }
+    </script>
+</body>
+</html>
